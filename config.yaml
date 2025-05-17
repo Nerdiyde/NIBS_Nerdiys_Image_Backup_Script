@@ -1,0 +1,30 @@
+# Configuration file for Nerdiys Image Backup Script
+
+# MQTT Broker settings
+mqtt_broker: "homeassistant.local"  # IP address or hostname of the MQTT broker
+mqtt_port: 1883  # Port number for MQTT connection (default: 1883)
+mqtt_username: "mqtt_client_username"         # (Optional) Username for MQTT authentication
+mqtt_password: "superSecretPassword"     # (Optional) Password for MQTT authentication
+mqtt_reconnect_interval: 10
+
+# SMB Share settings
+smb_share: "//ImageServerName/SMBShareName"  # Network path to the SMB share
+smb_username: "smb_access_usernam"  # Username for SMB authentication
+smb_password: "superSecretPasswordForSmbShare"  # Password for SMB authentication
+mount_point: "/mnt/backup"  # Local mount point for the SMB share
+smb_check_interval: 300  # SMB-drive check interval in seconds
+
+# Backup settings
+disk_to_backup: "/dev/mmcblk0"  # Path to the disk to be backed up
+retain_backups: 3  # Number of old backups to keep on the SMB share
+
+# Backup verification settings
+verify_backup: true                # Verification on/off
+verify_backup_segments: 4          # Number of segments to check
+verify_backup_segment_size: 1048576  # Segmentsize in bytes (here 1 MB = 1*1024*1024)
+
+# Example:
+# This configuration connects to an MQTT broker at homeassistant.local on port 1883.
+# It mounts the SMB share located at //ImageServerName/SMBShareName to /mnt/backup.
+# The system backs up the main Raspberry Pi SD card (/dev/mmcblk0).
+# It retains the last 3 backup images and deletes older ones automatically.
