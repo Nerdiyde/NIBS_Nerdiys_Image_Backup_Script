@@ -479,13 +479,13 @@ def start_backup(client):
             image_path = f"{MOUNT_POINT}/{backup_name}"
             if verify_backup(image_path):
                 logging.info("Backup successfully completed and verified.")
-                client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup successfully verified.")
+                client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup successfully completed and verified.")
             else:
                 logging.info("Backup was not successfully completed. Verification failed.")
-                client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup not successful.")
+                client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup was not successfully completed. Verification failed.")
         else:
             logging.info("Backup successfully completed. (Not verified)")
-            client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup successful (Not verified)")
+            client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup successfully completed. (Not verified)")
 
         client.publish(f"{MQTT_BASE_TOPIC}/last_status", "Success")
         client.publish(f"{MQTT_BASE_TOPIC}/last_successful_file", backup_name, retain=True)
@@ -506,7 +506,6 @@ def start_backup(client):
 
     if backup_process.returncode == 0:
         logging.info("Backup successfully completed.")
-        client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup successful")
         client.publish(f"{MQTT_BASE_TOPIC}/last_status", "Success")
         client.publish(f"{MQTT_BASE_TOPIC}/last_successful_file", backup_name, retain=True)
         client.loop(0.1)
