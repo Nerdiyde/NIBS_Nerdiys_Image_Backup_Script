@@ -386,7 +386,6 @@ def start_backup(client):
     image_path = f"{MOUNT_POINT}/{backup_name}"
     logging.info(f"Backup started: {image_path}")
 
-    #cmd = ["sudo", "dd", f"if={DISK_TO_BACKUP}", f"of={image_path}", "bs=1M", "status=progress"]
     if compression_enabled:
         cmd = f"sudo dd if={DISK_TO_BACKUP} bs=1M status=progress | gzip > {image_path}.gz"
         image_path += ".gz"
@@ -395,10 +394,6 @@ def start_backup(client):
     else:
         cmd = ["sudo", "dd", f"if={DISK_TO_BACKUP}", f"of={image_path}", "bs=1M", "status=progress"]
         backup_process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, preexec_fn=os.setsid)
-
-
-    # Start dd in its own process group
-    backup_process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, preexec_fn=os.setsid)
 
     disk_size = get_disk_size()
     backup_start_time = time.time()
