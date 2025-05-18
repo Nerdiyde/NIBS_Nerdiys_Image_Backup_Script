@@ -503,20 +503,6 @@ def start_backup(client):
     client.publish(f"{MQTT_BASE_TOPIC}/backup_ongoing", "False")
     client.publish(f"{MQTT_BASE_TOPIC}/last_end", last_end_str)
 
-
-    if backup_process.returncode == 0:
-        logging.info("Backup successfully completed.")
-        client.publish(f"{MQTT_BASE_TOPIC}/last_status", "Success")
-        client.publish(f"{MQTT_BASE_TOPIC}/last_successful_file", backup_name, retain=True)
-        client.loop(0.1)
-    else:
-        logging.error("Backup failed.")
-        client.publish(f"{MQTT_BASE_TOPIC}/status", "Backup failed")
-        client.publish(f"{MQTT_BASE_TOPIC}/last_status", "Failed")
-        client.loop(0.1)
-
-    client.publish(f"{MQTT_BASE_TOPIC}/backup_ongoing", "False")
-    client.publish(f"{MQTT_BASE_TOPIC}/last_end", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     client.loop(0.1)
 
     # If the backup was successful, perform cleanup of old backups
