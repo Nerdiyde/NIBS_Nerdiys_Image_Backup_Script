@@ -50,8 +50,8 @@ sudo apt install -y python3 python3-pip cifs-utils
 ### 3. Install Python dependencies:
 
 ```bash
-pip3 install --upgrade pip
-pip3 install paho-mqtt PyYAML
+sudo pip3 install --upgrade pip
+sudo pip3 install paho-mqtt==2.1.0 PyYAML
 ```
 
 ### 4. Configure the script by editing the `config.yaml` file with your settings:
@@ -72,7 +72,14 @@ sudo python3 script.py
 
 ## Running the script as a systemd service
 
-Create a systemd service file `/etc/systemd/system/nerdiy_backup.service` with the following content:
+Create a systemd service file `/etc/systemd/system/nerdiy_backup.service` with the following 
+
+...comand...
+
+```bash
+sudo nano /etc/systemd/system/nerdiy_backup.service
+```
+...and content:
 
 ```ini
 [Unit]
@@ -116,7 +123,7 @@ sudo journalctl -u nerdiy_backup.service -f
 - You will find the following entities created:
   - **Buttons** to start and stop backups.
   - **Sensors** for backup status, progress, last start/end times, success/failure, transfer speed, SMB status, backup count, and last successful backup file.
-  - **Switch** to enable or disable compression for backups.
+  - **Switch** to enable or disable compression for backups. (This increases CPU load and backup time)
 
 Control the backup and monitor its status directly from the Home Assistant UI.
 
@@ -124,7 +131,7 @@ Control the backup and monitor its status directly from the Home Assistant UI.
 
 ## Backup Compression
 
-- Backup compression can be toggled **on or off** via the Home Assistant switch `Backup Compression Enabled`.
+- Backup compression can be toggled **on or off** via the Home Assistant switch `Backup Compression Enabled`.  (This increases CPU load and backup time)
 - When enabled, the disk image is compressed on-the-fly with `gzip`.
 - Compressed backups have the `.img.gz` extension and are managed alongside uncompressed backups.
 
@@ -147,7 +154,7 @@ GNU General Public License 3.0
 
 ## Author
 
-Fabian @ Nerdiy.de (https://nerdiy.de) — 
+Fabian @ Nerdiy.de (https://nerdiy.de)
 
 ---
 

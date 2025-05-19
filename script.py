@@ -200,7 +200,7 @@ def register_homeassistant():
     logging.info("Registering Home Assistant auto-discovery...")
     device_info = {
         "identifiers": [MQTT_DEVICE_NAME],
-        "name": f"NIB on {socket.gethostname()}",
+        "name": f"NIBS on {socket.gethostname()}",
         "model": "Nerdiy's Image Backup System",
         "manufacturer": "Nerdiy.de"
     }
